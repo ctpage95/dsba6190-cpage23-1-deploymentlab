@@ -156,8 +156,8 @@ resource "azurerm_firewall" "rgcam" {
 
 // Data Factory
 
-resource "azurerm_data_factory" "rgcam" {
-  name                = "rgcam"
-  location            = azurerm_resource_group.rgcam.location
-  resource_group_name = azurerm_resource_group.rgcam.name
-}
+//resource "azurerm_data_factory" "rgcam" {
+//  name                = "rgcam"
+//  location            = azurerm_resource_group.rgcam.location
+//  resource_group_name = azurerm_resource_group.rgcam.name
+//}
