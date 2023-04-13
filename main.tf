@@ -75,3 +75,89 @@ resource "azurerm_machine_learning_workspace" "rgcam" {
   }
 }
 
+
+// Cosmos
+
+resource "azurerm_cosmosdb_account" "camdb" {
+  name                = "${var.class_name}${var.student_name}${var.environment}${random_integer.deployment_id_suffix.result}camdb"
+  location            = azurerm_resource_group.rgcam.location
+  resource_group_name = azurerm_resource_group.rgcam.name
+  offer_type          = "Standard"
+  kind                = "MongoDB"
+
+  enable_automatic_failover = true
+
+  capabilities {
+    name = "EnableAggregationPipeline"
+  }
+
+  capabilities {
+    name = "mongoEnableDocLevelTTL"
+  }
+
+  capabilities {
+    name = "MongoDBv3.4"
+  }
+
+  capabilities {
+    name = "EnableMongo"
+  }
+
+  consistency_policy {
+    consistency_level       = "BoundedStaleness"
+    max_interval_in_seconds = 300
+    max_staleness_prefix    = 100000
+  }
+
+  geo_location {
+    location          = "eastus"
+    failover_priority = 0
+  }
+
+}
+
+// Firewall
+
+resource "azurerm_virtual_network" "rgcam" {
+  name                = "testvnet"
+  address_space       = ["10.0.0.0/16"]
+  location            = azurerm_resource_group.rgcam.location
+  resource_group_name = azurerm_resource_group.rgcam.name
+}
+
+resource "azurerm_subnet" "rgcam" {
+  name                 = "AzureFirewallSubnet"
+  resource_group_name  = azurerm_resource_group.rgcam.name
+  virtual_network_name = azurerm_virtual_network.rgcam.name
+  address_prefixes     = ["10.0.1.0/24"]
+}
+
+resource "azurerm_public_ip" "rgcam" {
+  name                = "testpip"
+  location            = azurerm_resource_group.rgcam.location
+  resource_group_name = azurerm_resource_group.rgcam.name
+  allocation_method   = "Static"
+  sku                 = "Standard"
+}
+
+resource "azurerm_firewall" "rgcam" {
+  name                = "testfirewall"
+  location            = azurerm_resource_group.rgcam.location
+  resource_group_name = azurerm_resource_group.rgcam.name
+  sku_name            = "AZFW_VNet"
+  sku_tier            = "Standard"
+
+  ip_configuration {
+    name                 = "configuration"
+    subnet_id            = azurerm_subnet.rgcam.id
+    public_ip_address_id = azurerm_public_ip.rgcam.id
+  }
+}
+
+// Data Factory
+
+resource "azurerm_data_factory" "rgcam" {
+  name                = "rgcam"
+  location            = azurerm_resource_group.rgcam.location
+  resource_group_name = azurerm_resource_group.rgcam.name
+}
