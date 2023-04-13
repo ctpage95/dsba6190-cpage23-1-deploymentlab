@@ -46,14 +46,14 @@ resource "azurerm_storage_account" "storage" {
 
 data "azurerm_client_config" "current" {}
 
-resource "azurerm_application_insights" "rgcam" {
+resource "azurerm_application_insights" "appinscam" {
   name                = "workspace-rgcam-ai"
   location            = azurerm_resource_group.rgcam.location
   resource_group_name = azurerm_resource_group.rgcam.name
   application_type    = "web"
 }
 
-resource "azurerm_key_vault" "rgcam" {
+resource "azurerm_key_vault" "kvcam" {
   name                = "workspaceexamplekeyvault"
   location            = azurerm_resource_group.rgcam.location
   resource_group_name = azurerm_resource_group.rgcam.name
@@ -62,12 +62,12 @@ resource "azurerm_key_vault" "rgcam" {
 }
 
 
-resource "azurerm_machine_learning_workspace" "rgcam" {
+resource "azurerm_machine_learning_workspace" "mlwscam" {
   name                    = "rgcam-workspace"
   location                = azurerm_resource_group.rgcam.location
   resource_group_name     = azurerm_resource_group.rgcam.name
-  application_insights_id = azurerm_application_insights.rgcam.id
-  key_vault_id            = azurerm_key_vault.rgcam.id
+  application_insights_id = azurerm_application_insights.appinscam.id
+  key_vault_id            = azurerm_key_vault.kvcam.id
   storage_account_id      = azurerm_storage_account.storage.id
 
   identity {
@@ -118,17 +118,17 @@ resource "azurerm_cosmosdb_account" "camdb" {
 
 // Firewall
 
-resource "azurerm_virtual_network" "rgcam" {
+resource "azurerm_virtual_network" "vnetcam" {
   name                = "testvnet"
   address_space       = ["10.0.0.0/16"]
   location            = azurerm_resource_group.rgcam.location
   resource_group_name = azurerm_resource_group.rgcam.name
 }
 
-resource "azurerm_subnet" "rgcam" {
+resource "azurerm_subnet" "subnetcam" {
   name                 = "AzureFirewallSubnet"
   resource_group_name  = azurerm_resource_group.rgcam.name
-  virtual_network_name = azurerm_virtual_network.rgcam.name
+  virtual_network_name = azurerm_virtual_network.vnetcam.name
   address_prefixes     = ["10.0.1.0/24"]
 }
 
