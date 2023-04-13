@@ -115,12 +115,3 @@ resource "azurerm_cosmosdb_account" "camdb" {
   }
 
 }
-
-
-// Data Factory
-
-resource "azurerm_data_factory" "rgcam" {
-  name                = "rgcam"
-  location            = azurerm_resource_group.rgcam.location
-  resource_group_name = azurerm_resource_group.rgcam.name
-}
