@@ -149,7 +149,7 @@ resource "azurerm_firewall" "rgcam" {
 
   ip_configuration {
     name                 = "configuration"
-    subnet_id            = azurerm_subnet.rgcam.id
+    subnet_id            = azurerm_subnet.subnetcam.id
     public_ip_address_id = azurerm_public_ip.rgcam.id
   }
 }
