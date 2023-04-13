@@ -132,7 +132,7 @@ resource "azurerm_subnet" "subnetcam" {
   address_prefixes     = ["10.0.1.0/24"]
 }
 
-resource "azurerm_public_ip" "rgcam" {
+resource "azurerm_public_ip" "pubipcam" {
   name                = "testpip"
   location            = azurerm_resource_group.rgcam.location
   resource_group_name = azurerm_resource_group.rgcam.name
@@ -140,7 +140,7 @@ resource "azurerm_public_ip" "rgcam" {
   sku                 = "Standard"
 }
 
-resource "azurerm_firewall" "rgcam" {
+resource "azurerm_firewall" "firewallcam" {
   name                = "testfirewall"
   location            = azurerm_resource_group.rgcam.location
   resource_group_name = azurerm_resource_group.rgcam.name
@@ -150,7 +150,7 @@ resource "azurerm_firewall" "rgcam" {
   ip_configuration {
     name                 = "configuration"
     subnet_id            = azurerm_subnet.subnetcam.id
-    public_ip_address_id = azurerm_public_ip.rgcam.id
+    public_ip_address_id = azurerm_public_ip.pubipcam.id
   }
 }
 
