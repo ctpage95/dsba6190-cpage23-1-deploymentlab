@@ -129,7 +129,7 @@ resource "azurerm_machine_learning_workspace" "mlwscam" {
 // Data Factory
 
 resource "azurerm_data_factory" "datafactorycam" {
-  name                = "df-dsba6190-cam"
+  name                = "df-dsba6190-cam6190"
   location            = azurerm_resource_group.rgcam.location
   resource_group_name = azurerm_resource_group.rgcam.name
 }
