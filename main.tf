@@ -42,6 +42,17 @@ resource "azurerm_storage_account" "storage" {
   is_hns_enabled           = true
 }
 
+
+resource "azurerm_storage_account" "storageml" {
+  name                     = "${var.class_name}${var.student_name}${var.environment}${random_integer.deployment_id_suffix.result}stml"
+  resource_group_name      = azurerm_resource_group.rgcam.name
+  location                 = azurerm_resource_group.rgcam.location
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+  tags                     = local.tags
+}
+
+
 // Cosmos
 
 resource "azurerm_cosmosdb_account" "camdb" {
@@ -108,7 +119,7 @@ resource "azurerm_machine_learning_workspace" "mlwscam" {
   resource_group_name     = azurerm_resource_group.rgcam.name
   application_insights_id = azurerm_application_insights.appinscam.id
   key_vault_id            = azurerm_key_vault.kvcam.id
-  storage_account_id      = azurerm_storage_account.storage.id
+  storage_account_id      = azurerm_storage_account.storageml.id
 
   identity {
     type = "SystemAssigned"
