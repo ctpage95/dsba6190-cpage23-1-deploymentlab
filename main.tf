@@ -44,7 +44,7 @@ resource "azurerm_storage_account" "storage" {
 
 
 resource "azurerm_storage_account" "storageml" {
-  name                     = "${var.class_name}${var.student_name}${var.environment}${random_integer.deployment_id_suffix.result}stml"
+  name                     = "${var.class_name}${var.student_name}${var.environment}${random_integer.deployment_id_suffix.result}ml"
   resource_group_name      = azurerm_resource_group.rgcam.name
   location                 = azurerm_resource_group.rgcam.location
   account_tier             = "Standard"
