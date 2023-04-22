@@ -104,8 +104,8 @@ resource "azurerm_application_insights" "appinscam" {
   application_type    = "web"
 }
 
-resource "azurerm_key_vault" "kvcam2" {
-  name                = "ws-kv-dsba6190campage2"
+resource "azurerm_key_vault" "kvcam3" {
+  name                = "ws-kv-dsba6190campage3"
   location            = azurerm_resource_group.rgcam.location
   resource_group_name = azurerm_resource_group.rgcam.name
   tenant_id           = data.azurerm_client_config.current.tenant_id
@@ -118,7 +118,7 @@ resource "azurerm_machine_learning_workspace" "mlwscam" {
   location                = azurerm_resource_group.rgcam.location
   resource_group_name     = azurerm_resource_group.rgcam.name
   application_insights_id = azurerm_application_insights.appinscam.id
-  key_vault_id            = azurerm_key_vault.kvcam2.id
+  key_vault_id            = azurerm_key_vault.kvcam3.id
   storage_account_id      = azurerm_storage_account.storageml.id
 
   identity {
@@ -129,7 +129,7 @@ resource "azurerm_machine_learning_workspace" "mlwscam" {
 // Data Factory
 
 resource "azurerm_data_factory" "datafactorycam" {
-  name                = "df-dsba6190-cam6190-2"
+  name                = "df-dsba6190-cam6190-3"
   location            = azurerm_resource_group.rgcam.location
   resource_group_name = azurerm_resource_group.rgcam.name
 }
