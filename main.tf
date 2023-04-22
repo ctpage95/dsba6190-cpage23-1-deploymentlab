@@ -105,7 +105,7 @@ resource "azurerm_application_insights" "appinscam" {
 }
 
 resource "azurerm_key_vault" "kvcam" {
-  name                = "workspacekeyvaultdsba6190cam"
+  name                = "wskvdsba6190cam"
   location            = azurerm_resource_group.rgcam.location
   resource_group_name = azurerm_resource_group.rgcam.name
   tenant_id           = data.azurerm_client_config.current.tenant_id
