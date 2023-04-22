@@ -79,13 +79,4 @@ resource "azurerm_cosmosdb_account" "camdb" {
     location          = "eastus"
     failover_priority = 0
   }
-
-}
-
-// Data Factory Run
-
-resource "azurerm_data_factory" "datafactorycam" {
-  name                = "rgcam"
-  location            = azurerm_resource_group.rgcam.location
-  resource_group_name = azurerm_resource_group.rgcam.name
 }
