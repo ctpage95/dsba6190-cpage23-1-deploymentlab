@@ -116,7 +116,7 @@ resource "azurerm_cosmosdb_account" "camdb" {
 
 }
 
-// Data Factory
+// Data Factory Run
 
 resource "azurerm_data_factory" "datafactorycam" {
   name                = "rgcam"
