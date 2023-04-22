@@ -104,7 +104,7 @@ resource "azurerm_application_insights" "appinscam" {
   application_type    = "web"
 }
 
-resource "azurerm_key_vault" "kvcam" {
+resource "azurerm_key_vault" "kvcam2" {
   name                = "ws-kv-dsba6190campage"
   location            = azurerm_resource_group.rgcam.location
   resource_group_name = azurerm_resource_group.rgcam.name
@@ -118,7 +118,7 @@ resource "azurerm_machine_learning_workspace" "mlwscam" {
   location                = azurerm_resource_group.rgcam.location
   resource_group_name     = azurerm_resource_group.rgcam.name
   application_insights_id = azurerm_application_insights.appinscam.id
-  key_vault_id            = azurerm_key_vault.kvcam.id
+  key_vault_id            = azurerm_key_vault.kvcam2.id
   storage_account_id      = azurerm_storage_account.storageml.id
 
   identity {
